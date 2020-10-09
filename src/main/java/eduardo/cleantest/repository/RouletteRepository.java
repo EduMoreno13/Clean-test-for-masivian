@@ -24,4 +24,15 @@ public class RouletteRepository {
 	    	
 	        return hashOperations.values(ROULETTE_KEY);
 	    }
+	    public boolean rouletteExist(String Id) {
+	    	
+	    	return hashOperations.hasKey(ROULETTE_KEY, Id);
+	    }
+	    public Roulette findById(String Id) {
+	    	
+	    	return (Roulette) hashOperations.get(ROULETTE_KEY, Id);
+	    }
+	    public void update(Roulette roulette) {
+	    	hashOperations.put(ROULETTE_KEY, roulette.getId(), roulette);
+	    }
 }
