@@ -28,17 +28,7 @@ public class ApiRoulletteController {
 		 
 		 return rouletteRepository.findAll();
 	 }
-//	 @PutMapping("/openroulette/{id}")
-//	 public String openRoulette(@PathVariable String id) {
-//		 Roulette roulette = rouletteRepository.findById(id);
-//		 if (roulette.getStatus()=="closed"){
-//				 roulette.setStatus("open");
-//				 return "Succed";
-//		 }
-//		 else {
-//			 return "Denied";
-//		 }	 		 
-//	 }
+
 	 @PutMapping("/openroulette/{id}")
 	 public String openRoulette(@PathVariable String id) {
 		 
