@@ -1,6 +1,9 @@
 package eduardo.cleantest.repository;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -43,6 +46,21 @@ public class BetsRepository {
  
     public void delete(Bet bet, String userId) {
         hashOperations.delete(bet.getRouletteId(),userId);
+    }
+    public Map<String,Float> evalBets(String rouletteId, int win) {
+    	
+    	Map<String, Bet> bets = findAll(rouletteId);
+    	Map<String, Float> results = new HashMap<String,Float>();
+    	Iterator<String> it = bets.keySet().iterator();
+    	while(it.hasNext()){
+    		  String key = it.next();
+    		  Bet bet = bets.get(key);
+    		  bet.evalBet(win);
+    		  delete(bet,key);
+    		  results.put(key, bet.getMoney());
+    	}
+    	results.put("numero ganador", (float)(win));
+    	return results;	
     }
 
 }

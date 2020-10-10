@@ -8,13 +8,13 @@ public class Bet implements Serializable{
 	private String rouletteId;
 	private String type;
 	private String betValue;
-	private int money;
+	private float money;
 	
 	
-	public int getMoney() {
+	public float getMoney() {
 		return money;
 	}
-	public void setMoney(int money) {
+	public void setMoney(float money) {
 		this.money = money;
 	}
 	public String getRouletteId() {
@@ -60,7 +60,7 @@ public class Bet implements Serializable{
 	}
 	public boolean validateBet() {
 		if(validateType()) {
-			switch (this.getType()) {
+			switch (this.type) {
 			case "color":
 				return validateColorBet()&&validateMoney();
 			case "numero":
@@ -73,4 +73,31 @@ public class Bet implements Serializable{
 			return false;
 		}
 	}
+	
+	public void evalBet(int win) {
+		if(this.type.equals("color")) {
+			evalColorBet(win);
+		}
+		if(this.type.equals("numero")) {
+			evalNumBet(win);
+		}
+
+	}
+	public void evalColorBet(int win) {
+		if((this.betValue.equals("negro") && win%2>0)||(this.betValue.equals("rojo") && win%2==0)) {
+			this.money=(float) (this.money*1.8);
+		}
+		else{
+			this.money=(float) (this.money*-1);
+		}
+	}
+	public void evalNumBet(int win) {
+		if(win==Integer.parseInt(this.betValue)) {
+			this.money=this.money*5;
+		}
+		else {
+			this.money=this.money*-1;
+		}
+	}
+	
 }
